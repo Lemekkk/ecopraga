@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eco Praga Communications</title>
+  <meta name="description" content="Eco Praga Communications — Ratos da Rádio, Pombo News e Pod Crir. Projetos de comunicação da E.E. Professor Christino Cabral, Bauru (SP).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page__header">
+      <img src="assets/header.png" alt="Ratos da Rádio — Eco Praga Communications" class="page__art">
+      <h1 class="sr-only">Eco Praga Communications</h1>
+    </header>
+
+    <nav class="menu" aria-label="Projetos">
+      <button class="menu__btn menu__btn--ratos" data-target="ratos" aria-controls="card-ratos" aria-expanded="false">
+        <img src="assets/btn-ratos.png" alt="Ratos da Rádio">
+      </button>
+      <button class="menu__btn menu__btn--pombo" data-target="pombo" aria-controls="card-pombo" aria-expanded="false">
+        <img src="assets/btn-pombo.png" alt="Pombo News">
+      </button>
+      <button class="menu__btn menu__btn--pod" data-target="pod" aria-controls="card-pod" aria-expanded="false">
+        <img src="assets/btn-podcrir.png" alt="Pod Crir">
+      </button>
+    </nav>
+
+    <footer class="page__footer">powered and made by: czlemkk</footer>
+  </div>
+
+  <main class="stage">
+    <!-- Ratos da Rádio -->
+    <article class="card card--purple" id="card-ratos" data-card="ratos" hidden>
+      <div class="card__box card__title">
+        <img src="assets/logo-ratos.png" alt="Ratos da Rádio" class="card__logo">
+        <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      </div>
+      <div class="card__box card__text">
+        <p>O Ratos da Rádio é um projeto de comunicação sonora da Escola Estadual Professor Christino Cabral, em Bauru (SP). A iniciativa funciona como uma rádio escolar gerida pelos próprios estudantes, incentivando o protagonismo juvenil, a criatividade e o desenvolvimento de habilidades de locução e técnica de áudio.</p>
+        <p>Durante a rotina escolar, a equipe de alunos utiliza o sistema de som para transmitir músicas, avisos importantes, quadros culturais e homenagens. O projeto dá voz direta aos jovens no pátio, conectando a comunidade estudantil de forma dinâmica e descontraída no ambiente de tempo integral.</p>
+      </div>
+      <div class="card__links">
+        <a class="pill" href="https://www.instagram.com/radio.christino_/" target="_blank" rel="noopener">
+          <svg class="pill__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" class="fill"/></svg>
+          @radio.christino_
+        </a>
+      </div>
+    </article>
+
+    <!-- Pombo News -->
+    <article class="card card--dark" id="card-pombo" data-card="pombo" hidden>
+      <div class="card__box card__title">
+        <img src="assets/logo-pombo.png" alt="Pombo News" class="card__logo card__logo--pombo">
+        <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      </div>
+      <div class="card__box card__text">
+        <p>O Pombo News é um portal de notícias digital criado por estudantes e professores da Escola Estadual Professor Christino Cabral, em Bauru (SP). O projeto estimula o protagonismo juvenil e o letramento digital ao transformar os alunos em repórteres e editores de sua própria comunidade.</p>
+        <p>No site oficial do Pombo News, os jovens publicam coberturas de eventos escolares, avisos importantes, artigos de opinião, textos de moda, cultura e artes visuais. Sem canais de vídeo vinculados, a iniciativa foca na escrita e na comunicação, servindo como uma ponte entre a rotina escolar, as famílias e a comunidade local.</p>
+      </div>
+      <div class="card__links">
+        <a class="pill" href="https://www.instagram.com/pombonews/" target="_blank" rel="noopener">
+          <svg class="pill__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" class="fill"/></svg>
+          @pombonews
+        </a>
+        <!-- TODO: trocar "#" pelo endereço do site do Pombo News -->
+        <a class="pill" href="#" target="_blank" rel="noopener">
+          <svg class="pill__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2h-1"/><path d="M7 8h7M7 11h3M7 14h7M7 17h5"/><rect x="11.5" y="10.5" width="2.5" height="1.5" class="fill"/></svg>
+          Pombo news
+        </a>
+      </div>
+    </article>
+
+    <!-- Pod Crir -->
+    <article class="card card--dark" id="card-pod" data-card="pod" hidden>
+      <div class="card__box card__title">
+        <img src="assets/logo-podcrir.png" alt="Pod Crir" class="card__logo card__logo--pod">
+        <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      </div>
+      <div class="card__box card__text card__text--soon">
+        <p>Em breve.</p>
+      </div>
+    </article>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
