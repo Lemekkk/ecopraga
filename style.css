@@ -2,12 +2,14 @@
   --page-bg: #000;
   --page-w: 422px;
 
-  /* vidro (glass) dos pop-ups: cor translúcida + desfoque do fundo */
-  --purple: rgba(65, 44, 98, 0.55);
-  --purple-box: rgba(30, 16, 48, 0.28);
-  --dark: rgba(40, 40, 40, 0.5);
-  --dark-box: rgba(10, 10, 10, 0.25);
-  --glass-blur: blur(22px) saturate(160%);
+  /* vidro (glass) dos pop-ups: cor translúcida + desfoque do fundo.
+     No Chromium o script.js troca o desfoque por um filtro de lente que
+     distorce o fundo nas bordas; --glass-blur é o que os outros navegadores usam. */
+  --purple: rgba(65, 44, 98, 0.36);
+  --purple-box: rgba(30, 16, 48, 0.2);
+  --dark: rgba(40, 40, 40, 0.38);
+  --dark-box: rgba(10, 10, 10, 0.18);
+  --glass-blur: blur(10px) saturate(160%);
 
   --line: rgba(255, 255, 255, 0.16);
   --line-strong: rgba(255, 255, 255, 0.28);
@@ -307,6 +309,8 @@ img {
   padding: 15px 14px 16px 14px;
   font-size: 15px;
   line-height: 20px;
+  /* mantém o texto legível com o fundo aparecendo através do vidro */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .card__text p {

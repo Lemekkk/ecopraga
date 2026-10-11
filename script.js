@@ -139,3 +139,107 @@ const fromHash = location.hash.slice(1);
 if (cardFor(CSS.escape(fromHash))) {
   openCard(fromHash);
 }
+
+// ---------- Vidro líquido: as bordas do card distorcem o fundo ----------
+// Gera um "mapa de deslocamento" do tamanho do card: perto das bordas e quinas
+// o fundo é puxado para dentro, como a refração de uma lente. Só o Chromium
+// aceita filtro SVG em backdrop-filter; nos outros fica o desfoque do CSS.
+
+const LENS = { bezel: 32, scale: 110, blur: 1.5, saturate: 1.5 };
+const supportsLens =
+  /Chrome\/|Chromium\/|Edg\//.test(navigator.userAgent) &&
+  !/iPhone|iPad|iPod/.test(navigator.userAgent);
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+const lensDefs = document.createElementNS(SVG_NS, "svg");
+lensDefs.setAttribute("aria-hidden", "true");
+lensDefs.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
+document.body.append(lensDefs);
+
+function displacementMap(w, h, r, bezel) {
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(w, h);
+  const px = img.data;
+  const hw = w / 2;
+  const hh = h / 2;
+
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const cx = x + 0.5 - hw;
+      const cy = y + 0.5 - hh;
+      const qx = Math.abs(cx) - (hw - r);
+      const qy = Math.abs(cy) - (hh - r);
+
+      // distância até a borda arredondada e direção da borda (normal)
+      let dist, nx, ny;
+      if (qx > 0 && qy > 0) {
+        const len = Math.hypot(qx, qy);
+        dist = r - len;
+        nx = qx / len;
+        ny = qy / len;
+      } else if (qx > qy) {
+        dist = r - qx;
+        nx = 1;
+        ny = 0;
+      } else {
+        dist = r - qy;
+        nx = 0;
+        ny = 1;
+      }
+      nx *= Math.sign(cx) || 1;
+      ny *= Math.sign(cy) || 1;
+
+      const t = Math.min(1, Math.max(0, 1 - dist / bezel));
+      const m = t * t;
+      const i = (y * w + x) * 4;
+      px[i] = 128 - nx * m * 127;
+      px[i + 1] = 128 - ny * m * 127;
+      px[i + 2] = 128;
+      px[i + 3] = 255;
+    }
+  }
+
+  ctx.putImageData(img, 0, 0);
+  return canvas.toDataURL();
+}
+
+function applyLens(card) {
+  const w = card.offsetWidth;
+  const h = card.offsetHeight;
+  if (!w || !h) return;
+
+  const id = `lens-${card.dataset.card}-${w}x${h}`;
+  if (card.dataset.lens === id) return;
+  lensDefs.querySelector(`#${card.dataset.lens}`)?.remove();
+
+  const map = displacementMap(w, h, RADIUS, LENS.bezel);
+  const filter = document.createElementNS(SVG_NS, "filter");
+  filter.id = id;
+  filter.setAttribute("x", "0");
+  filter.setAttribute("y", "0");
+  filter.setAttribute("width", w);
+  filter.setAttribute("height", h);
+  filter.setAttribute("filterUnits", "userSpaceOnUse");
+  filter.setAttribute("color-interpolation-filters", "sRGB");
+  filter.innerHTML = `
+    <feGaussianBlur in="SourceGraphic" stdDeviation="${LENS.blur}" edgeMode="duplicate" result="blur"/>
+    <feImage href="${map}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="map"/>
+    <feDisplacementMap in="blur" in2="map" scale="${LENS.scale}" xChannelSelector="R" yChannelSelector="G" result="lens"/>
+    <feColorMatrix in="lens" type="saturate" values="${LENS.saturate}"/>`;
+  lensDefs.append(filter);
+
+  card.dataset.lens = id;
+  card.style.backdropFilter = `url(#${id})`;
+  card.style.webkitBackdropFilter = `url(#${id})`;
+}
+
+if (supportsLens) {
+  // recalcula o mapa sempre que o card aparece ou muda de tamanho
+  const lensObserver = new ResizeObserver((entries) =>
+    entries.forEach((entry) => applyLens(entry.target))
+  );
+  cards.forEach((card) => lensObserver.observe(card));
+}
