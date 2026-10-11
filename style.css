@@ -43,17 +43,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Fundo que preenche a tela: a própria ilustração do topo, ampliada e desfocada */
-body::before {
+/* Fundo que preenche a tela: a própria ilustração do topo, ampliada e desfocada.
+   Fica dentro de .backdrop, que corta o excesso para a página não ficar mais
+   larga que a tela (no celular isso deslocava o pop-up). */
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 620px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 60%, transparent);
+  mask-image: linear-gradient(#000 60%, transparent);
+}
+
+.backdrop::before {
   content: "";
   position: absolute;
-  top: -60px;
-  left: -120px;
-  right: -120px;
-  height: 640px;
+  inset: -60px -120px 40px;
   background: url("assets/header.png") center / 100% 100% no-repeat;
   filter: blur(50px) brightness(0.85);
-  pointer-events: none;
 }
 
 img {
