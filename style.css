@@ -35,6 +35,11 @@ body {
   min-height: 100%;
 }
 
+/* tira o "piscar" azul que o celular coloca ao tocar em botões e links */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   position: relative;
   min-height: 100vh;
