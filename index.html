@@ -8,26 +8,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/don-graffiti.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="assets/fonts/bebas-neue.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
 
   <div class="page">
-    <header class="page__header">
-      <img src="assets/header.png" alt="Ratos da Rádio — Eco Praga Communications" class="page__art">
-      <h1 class="sr-only">Eco Praga Communications</h1>
+    <!-- Posições em px do frame de 422px do Figma (--x, --y, --w, --h, --fs) -->
+    <header class="hero">
+      <div class="hero__bg">
+        <img src="assets/header-art.webp" alt="Ilustração dos Ratos da Rádio e do Pombo News" class="hero__art" width="844" height="844">
+      </div>
+      <h1 class="hero__logo">
+        <span class="fx graffiti" style="--x:124; --y:337; --w:78; --h:39; --fs:48">Eco</span>
+        <span class="fx graffiti" style="--x:106; --y:371; --w:221; --h:51; --fs:96">Praga</span>
+        <span class="fx bebas" style="--x:92; --y:451; --w:235; --h:40; --fs:24; text-align:right">Communications</span>
+      </h1>
     </header>
 
     <nav class="menu" aria-label="Projetos">
-      <button class="menu__btn menu__btn--ratos" data-target="ratos" aria-controls="card-ratos" aria-expanded="false">
-        <img src="assets/btn-ratos.png" alt="Ratos da Rádio">
+      <!-- Posições em px do botão de 361x155 do Figma -->
+      <button class="menu__btn menu__btn--ratos" data-target="ratos" aria-controls="card-ratos" aria-expanded="false" aria-label="Ratos da Rádio">
+        <img src="assets/banner-ratos.webp" alt="" class="menu__banner">
+        <span class="fx graffiti" style="--x:122; --y:26; --w:121; --h:29; --fs:48">RATOS</span>
+        <span class="fx graffiti" style="--x:161; --y:65; --w:37; --h:21; --fs:32">da</span>
+        <span class="fx graffiti" style="--x:119; --y:89; --w:121; --h:29; --fs:48">radio</span>
       </button>
-      <button class="menu__btn menu__btn--pombo" data-target="pombo" aria-controls="card-pombo" aria-expanded="false">
-        <img src="assets/btn-pombo.png" alt="Pombo News">
+      <button class="menu__btn menu__btn--pombo" data-target="pombo" aria-controls="card-pombo" aria-expanded="false" aria-label="Pombo News">
+        <img src="assets/banner-pombo.webp" alt="" class="menu__banner">
+        <span class="fx graffiti" style="--x:120; --y:33; --w:121; --h:29; --fs:48">pombo</span>
+        <span class="fx graffiti" style="--x:120; --y:74; --w:121; --h:29; --fs:48">news</span>
       </button>
-      <button class="menu__btn menu__btn--pod" data-target="pod" aria-controls="card-pod" aria-expanded="false">
-        <img src="assets/btn-podcrir.png" alt="Pod Crir">
+      <button class="menu__btn menu__btn--pod" data-target="pod" aria-controls="card-pod" aria-expanded="false" aria-label="Pod Crir">
+        <span class="fx graffiti" style="--x:120; --y:33; --w:121; --h:29; --fs:48">pod</span>
+        <span class="fx graffiti" style="--x:120; --y:71; --w:121; --h:29; --fs:48">crir</span>
       </button>
     </nav>
 
@@ -38,7 +54,12 @@
     <!-- Ratos da Rádio -->
     <article class="card card--purple" id="card-ratos" data-card="ratos" hidden>
       <div class="card__box card__title">
-        <img src="assets/logo-ratos.png" alt="Ratos da Rádio" class="card__logo">
+        <!-- --x é a distância até o centro da caixa; --y até o topo -->
+        <h2 class="card__logo" aria-label="Ratos da Rádio">
+          <span class="lx graffiti" style="--x:-103.5; --y:9.5; --fs:80">Ratos</span>
+          <span class="lx graffiti" style="--x:68.2; --y:46.7; --fs:40">da</span>
+          <span class="lx graffiti" style="--x:-48.5; --y:86.2; --fs:75">Rádio</span>
+        </h2>
         <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
       </div>
       <div class="card__box card__text">
@@ -56,7 +77,10 @@
     <!-- Pombo News -->
     <article class="card card--dark" id="card-pombo" data-card="pombo" hidden>
       <div class="card__box card__title">
-        <img src="assets/logo-pombo.png" alt="Pombo News" class="card__logo card__logo--pombo">
+        <h2 class="card__logo" aria-label="Pombo News">
+          <span class="lx graffiti" style="--x:-91.6; --y:7.8; --fs:64">Pombo</span>
+          <span class="lx graffiti" style="--x:-24.6; --y:59.9; --fs:64">News</span>
+        </h2>
         <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
       </div>
       <div class="card__box card__text">
@@ -79,7 +103,10 @@
     <!-- Pod Crir -->
     <article class="card card--dark" id="card-pod" data-card="pod" hidden>
       <div class="card__box card__title">
-        <img src="assets/logo-podcrir.png" alt="Pod Crir" class="card__logo card__logo--pod">
+        <h2 class="card__logo card__logo--center" aria-label="Pod Crir">
+          <span class="lx graffiti" style="--y:8.7; --fs:64">Pod</span>
+          <span class="lx graffiti" style="--y:59.4; --fs:64">Crir</span>
+        </h2>
         <button class="card__close" aria-label="Fechar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
       </div>
       <div class="card__box card__text card__text--soon">

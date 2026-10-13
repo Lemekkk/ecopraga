@@ -1,3 +1,23 @@
+/* Fontes do design. Os "overrides" fixam as métricas verticais iguais às do
+   Figma, para os textos ficarem na mesma altura em qualquer sistema. */
+@font-face {
+  font-family: "Don Graffiti";
+  src: url("assets/fonts/don-graffiti.woff") format("woff");
+  font-display: block;
+  ascent-override: 78.5%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("assets/fonts/bebas-neue.woff") format("woff");
+  font-display: block;
+  ascent-override: 90%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
 :root {
   --page-bg: #000;
   --page-w: 422px;
@@ -14,7 +34,8 @@
   --line: rgba(255, 255, 255, 0.16);
   --line-strong: rgba(255, 255, 255, 0.28);
   --text: #fff;
-  --muted: #464646;
+  --muted: #4a4a4a;
+  --paper: #f4f0e9;
 
   --radius: 18px;
   --font: "Poppins", system-ui, sans-serif;
@@ -69,7 +90,10 @@ body {
   content: "";
   position: absolute;
   inset: -60px -120px 40px;
-  background: url("assets/header.png") center / 100% 100% no-repeat;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 10%, #000 100%),
+    url("assets/header-art.webp") center / 100% 100% no-repeat,
+    var(--paper);
   filter: blur(50px) brightness(0.85);
 }
 
@@ -90,6 +114,7 @@ img {
 /* ---------- Coluna central (estilo Linktree) ---------- */
 
 .page {
+  container-type: inline-size;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -99,9 +124,63 @@ img {
   margin: 0 auto;
 }
 
-.page__art {
+/* Texto posicionado como no Figma: as variáveis vêm em px do frame original
+   (--h fica só como referência) e --u converte para o tamanho real, então tudo escala junto com a coluna. */
+.fx {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  font-size: calc(var(--fs) * var(--u));
+  /* "auto" do Figma: a linha começa no topo da fonte */
+  line-height: normal;
+  text-align: center;
+  white-space: pre;
+}
+
+.graffiti {
+  font-family: "Don Graffiti", var(--font);
+  font-weight: 400;
+}
+
+.bebas {
+  font-family: "Bebas Neue", var(--font);
+  font-weight: 400;
+}
+
+.hero {
+  --u: calc(100cqw / 422);
+  position: relative;
+  height: calc(580 * var(--u));
+  color: #fff;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.hero__art {
+  position: absolute;
+  top: calc(-25 * var(--u));
+  left: 0;
   width: 100%;
   height: auto;
+}
+
+/* degradê do Figma: transparente no topo até preto em 41% do frame */
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, #000 calc(571 * var(--u)));
+}
+
+.hero__logo {
+  margin: 0;
+  font-weight: 400;
 }
 
 .menu {
@@ -112,39 +191,60 @@ img {
 }
 
 .menu__btn {
+  --u: calc(100cqw / 361);
+  container-type: inline-size;
   position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 361 / 155;
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: #2b2b2b;
+  border: 0;
+  border-radius: 22px;
+  background: #000;
+  color: #000;
+  font: inherit;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.menu__btn img {
+.menu__btn--ratos {
+  color: #fff;
+}
+
+.menu__banner {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.menu__btn--ratos { background: #6e55a1; }
-.menu__btn--pombo { background: #f5f4f5; }
+/* camada do Figma por cima do banner: cinza 20% com desfoque de 2px */
+.menu__btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(217, 217, 217, 0.2);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.menu__btn .fx {
+  z-index: 1;
+}
 
 .menu__btn:hover,
 .menu__btn:focus-visible {
   transform: translateY(-3px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
-  border-color: var(--line-strong);
   outline: none;
 }
 
 .menu__btn[aria-expanded="true"] {
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55);
 }
 
 .page__footer {
@@ -152,7 +252,7 @@ img {
   padding: 0 16px 20px;
   text-align: center;
   font-size: 15px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.6px;
   color: var(--muted);
 }
 
@@ -252,27 +352,35 @@ img {
 }
 
 .card__title {
-  display: grid;
-  place-items: center;
-  min-height: 123px;
-  padding: 6px 40px;
+  height: 123px;
 }
 
 .card--purple .card__title {
-  min-height: 162px;
+  height: 162px;
 }
 
+/* Título em Don Graffiti: --x é a distância (px) até o centro da caixa */
 .card__logo {
-  width: 216px;
-  height: auto;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font-weight: 400;
+  pointer-events: none;
 }
 
-.card__logo--pombo {
-  width: 190px;
+.lx {
+  position: absolute;
+  left: calc(50% + var(--x) * 1px);
+  top: calc(var(--y) * 1px);
+  font-size: calc(var(--fs) * 1px);
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.card__logo--pod {
-  width: 82px;
+.card__logo--center .lx {
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 
 .card__close {
@@ -392,7 +500,7 @@ img {
 
 /* Em telas largas, as bordas da ilustração se fundem com o fundo desfocado */
 @media (min-width: 480px) {
-  .page__art {
+  .hero__bg {
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
   }
